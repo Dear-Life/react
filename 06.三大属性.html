@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>react</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        class State1 extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    isHot: true
+                }
+                this.update = this.update.bind(this)
+            }
+            update() {
+                const { isHot } = this.state
+                this.setState({ isHot: !isHot })
+            }
+            render() {
+                const { isHot } = this.state
+                return <h1 onClick={this.update}>今天天气很{isHot ? '炎热' : '凉爽'}</h1>
+            }
+        }
+
+        class State2 extends React.Component {
+            state = {
+                isHot: true
+            }
+            update = () => {
+                const { isHot } = this.state
+                this.setState({ isHot: !isHot })
+            }
+            render() {
+                const { isHot } = this.state
+                return <h1 onClick={this.update}>今天天气很{isHot ? '炎热' : '凉爽'}</h1>
+            }
+        }
+
+        class Props1 extends React.Component {
+            static propTypes = {
+                age: PropTypes.number.isRequired
+            }
+            static defaultProps = {
+                gender: '男'
+            }
+            render() {
+                const { name, gender, age } = this.props
+                return (
+                    <ul>
+                        <li>姓名：{name}</li>
+                        <li>性别：{gender}</li>
+                        <li>年龄：{age}</li>
+                    </ul>
+                )
+            }
+        }
+
+        function Props2(props) {
+            const { name, gender, age } = props
+            return (
+                <ul>
+                    <li>姓名：{name}</li>
+                    <li>性别：{gender}</li>
+                    <li>年龄：{age}</li>
+                </ul>
+            )
+        }
+
+        Props2.propTypes = {
+            age: PropTypes.number.isRequired
+        }
+        Props2.defaultProps = {
+            gender: '男'
+        }
+
+        class Refs extends React.Component {
+            myRef = React.createRef()
+            show1 = () => {
+                console.log(this.refs.input1.value)
+            }
+            show2 = () => {
+                console.log(this.input2.value)
+            }
+            show3 = () => {
+                console.log(this.myRef.current.value)
+            }
+            render() {
+                return (
+                    <div>
+                        <input ref="input1" type="text" />
+                        <button onClick={this.show1}>按钮</button>
+                        <input ref={input2 => this.input2 = input2} type="text" onBlur={this.show2} />
+                        <input ref={this.myRef} type="text" onBlur={this.show3} />
+                    </div>
+                )
+            }
+        }
+
+        const person = {
+            name: 'Taylor',
+            gender: 'female',
+            age: 18
+        }
+
+        ReactDOM.render(
+            <div>
+                <State1 />
+                <State2 />
+                <Props1 {...person} />
+                <Props1 name="Tom" age="20" />
+                <Props2 {...person} />
+                <Props2 name="Tom" age="20" />
+                <Refs />
+            </div>
+            , document.getElementById("app"))
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>react</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        class Demo extends React.Component {
+            state = {
+                password: '',
+                email: ''
+            }
+            handle = event => {
+                event.preventDefault()
+                console.log(this.username.value, this.state.password, this.state.email)
+            }
+            onChange = (event, key) => {
+                this.setState({ [key]: event.target.value })
+            }
+            onChange2 = key => {
+                return event => {
+                    this.setState({ [key]: event.target.value })
+                }
+            }
+            render() {
+                return (
+                    <form onSubmit={this.handle} >
+                        <input ref={username => this.username = username} type="text" />
+                        <input
+                            type="text"
+                            value={this.state.password}
+                            onChange={event => this.onChange(event, 'password')}
+                        />
+                        <input
+                            type="text"
+                            value={this.state.email}
+                            onChange={this.onChange2('email')}
+                        />
+                        <input type="submit" />
+                    </form>
+                )
+            }
+        }
+        ReactDOM.render(<Demo />, document.getElementById("app"))
+    </script>
+</body>
+
+</html>

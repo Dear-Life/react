@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background: url(./logo.png);
+            background-size: cover;
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+            content: url(./logo.png);
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio: 2) {
+            div {
+                background-image: url(./logo@2x.png);
+            }
+
+            img {
+                content: url(./logo@2x.png);
+            }
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio: 3) {
+            div {
+                background-image: url(./logo@3x.png);
+            }
+
+            img {
+                content: url(./logo@3x.png);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <img>
+    <script>
+        console.log(devicePixelRatio)
+        console.log(document.documentElement.clientWidth)
+        console.log(innerWidth)
+        console.log(outerWidth)
+        console.log(screen.width)
+    </script>
+</body>
+
+</html>

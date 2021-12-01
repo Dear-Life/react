@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>react</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        class Parent extends React.Component {
+            state = {
+                msg: 'Hi'
+            }
+            update = () => {
+                this.setState({ msg: 'update' })
+            }
+            static getDerivedStateFromProps(props) {
+                console.log('getDerivedStateFromProps()')
+                return props
+            }
+            getSnapshotBeforeUpdate() {
+                return 111
+            }
+            componentDidUpdate(props, state, snapshot) {
+                console.log(snapshot)
+            }
+            render() {
+                return (
+                    <div>
+                        <h1>{this.state.msg}</h1>
+                        <button onClick={this.update}>更新</button>
+                        <Demo />
+                    </div>
+                )
+            }
+        }
+        class Demo extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    count: 1
+                }
+                console.log('constructor()')
+            }
+            UNSAFE_componentWillMount() {
+                console.log('componentWillMount()')
+            }
+            componentDidMount() {
+                console.log('componentDidMount()')
+            }
+            componentWillUnmount() {
+                console.log('componentWillUnmount()')
+            }
+            update = () => {
+                this.setState(({ count }) => ({ count: count + 1 }))
+            }
+            uninstall = () => {
+                ReactDOM.unmountComponentAtNode(document.getElementById("app"))
+            }
+            force = () => {
+                this.forceUpdate()
+            }
+            UNSAFE_componentWillReceiveProps() {
+                console.log('componentWillReceiveProps()')
+            }
+            shouldComponentUpdate() {
+                console.log('shouldComponentUpdate()')
+                return true
+            }
+            UNSAFE_componentWillUpdate() {
+                console.log('componentWillUpdate()')
+            }
+            componentDidUpdate() {
+                console.log('componentDidUpdate()')
+            }
+            render() {
+                console.log('render()')
+                const { count } = this.state
+                return (
+                    <div>
+                        <h1>{count}</h1>
+                        <button onClick={this.update}>更新</button>
+                        <button onClick={this.force}>强制更新</button>
+                        <button onClick={this.uninstall}>卸载</button>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Parent msg="Hello" />, document.getElementById("app"))
+    </script>
+</body>
+
+</html>

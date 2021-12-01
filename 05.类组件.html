@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>react</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        class MyComponent extends React.Component {
+            render() {
+                console.log(this)
+                return <h1>Hi</h1>
+            }
+        }
+        ReactDOM.render(<MyComponent />, document.getElementById("app"))
+    </script>
+    <script>
+        class Person {
+            constructor(name, age) {
+                this.name = name
+                this.age = age
+            }
+            say() {
+                console.log(`name = ${this.name} age = ${this.age}`)
+            }
+        }
+
+        class Stu extends Person {
+            constructor(name, age, gender) {
+                super(name, age)
+                this.gender = gender
+            }
+            sing() {
+                console.log('singing')
+            }
+        }
+
+        const s = new Stu('Taylor', 18, 'female')
+        console.log(s)
+        s.sing()
+        s.say()
+    </script>
+</body>
+
+</html>
